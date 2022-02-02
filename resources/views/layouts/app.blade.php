@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body>
+
+<body class="bg-light">
     @yield('content')
 
     <script src="{{ asset('plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
@@ -33,22 +35,32 @@
         });
     </script>
     @if (session('success'))
-        <script>
-            Toast.fire({
+    <script>
+        Toast.fire({
                 icon: 'success',
                 title: '{{ session('success') }}'
             })
-        </script>
+    </script>
     @endif
     @if (session('error'))
-        <script>
-            Toast.fire({
+    <script>
+        Toast.fire({
                 icon: 'error',
                 title: '{{ session('error') }}'
             })
-        </script>
+    </script>
     @endif
-
+    @if ($errors->any())
+    @foreach($errors->all() as $error)
+    <script>
+        Toast.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}'
+                })
+    </script>
+    @endforeach
+    @endif
     @stack('scripts')
 </body>
+
 </html>
